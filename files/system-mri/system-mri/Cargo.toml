@@ -1,0 +1,32 @@
+[package]
+name = "system-mri"
+version = "0.1.0"
+edition = "2021"
+description = "X-ray vision for Linux processes: memory, files, sockets, threads, syscalls and perf counters in one TUI"
+license = "MIT"
+repository = "https://github.com/YOUR_NAME/system-mri"
+readme = "README.md"
+keywords = ["linux", "procfs", "tui", "observability", "ptrace"]
+categories = ["command-line-utilities", "development-tools::debugging"]
+
+[lib]
+name = "system_mri"
+path = "src/lib.rs"
+
+[[bin]]
+name = "mri"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+crossterm = "0.28"
+libc = "0.2"
+nix = { version = "0.29", default-features = false, features = ["ptrace", "signal", "process", "fs"] }
+ratatui = "0.28"
+thiserror = "1"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
